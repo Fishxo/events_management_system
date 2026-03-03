@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 50px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .container h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .container p {
+      margin-bottom: 30px;
+      color: #e0e0e0;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 12px 0;
+      margin: 10px 0;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .alternate {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .alternate a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    /* Optional: small floating shape decorations */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.2;
+    }
+
+    .shape1 {
+      width: 150px;
+      height: 150px;
+      background: #ff416c;
+      top: 50px;
+      left: 30px;
+    }
+
+    .shape2 {
+      width: 200px;
+      height: 200px;
+      background: #2575fc;
+      bottom: 50px;
+      right: 40px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="shape shape1"></div>
+  <div class="shape shape2"></div>
+
+  <div class="container">
+    <h1>Welcome to Evently</h1>
+    <p>Manage, browse, and attend amazing events easily!</p>
+    
+    <form action="/ATTE/signin" id="" class="btn" method="get">
+        <button type="submit"> sign up</button>
+    </form>
+    <a href="#" class="btn">
+        <form action="/ATTE/login" method="get">
+            <button type="submit">Log in</button>
+        </form>
+    </a>
+
+    <div class="alternate">
+      New here? <a href="#">Create account</a> | Already have an account? <a href="#">Login</a>
+    </div>
+  </div>
+</body>
+</html>
