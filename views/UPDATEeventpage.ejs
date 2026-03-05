@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Update Event</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+  color:#333;
+}
+
+.container{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  width:500px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.container h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#667eea;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  outline:none;
+  transition:0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:#2a5298;
+}
+
+textarea{
+  resize:none;
+  height:80px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:#2a5298;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#1e3c72;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Update Event</h2>
+
+  <form action="/ADMINhomepage/<%= eve._id %>/update" method="post">
+    
+    <div class="form-group">
+      <label>Event Title</label>
+      <input type="text" name="title" value="<%= eve.title %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="description" required><%= eve.description %></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Start Date & Time</label>
+      <input type="datetime-local" name="startDateTime" value="<%= new Date(eve.startDateTime).toISOString().slice(0,16) %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>End Date & Time</label>
+      <input type="datetime-local" name="endDateTime" value="<%= new Date(eve.endDateTime).toISOString().slice(0,16) %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" name="location" value="<%= eve.location %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Category</label>
+      <select name="category" required>
+        <option value="Conference" <%= eve.category==='Conference' ? 'selected' : '' %>>Conference</option>
+        <option value="Workshop" <%= eve.category==='Workshop' ? 'selected' : '' %>>Workshop</option>
+        <option value="Music" <%= eve.category==='Music' ? 'selected' : '' %>>Music</option>
+        <option value="Business" <%= eve.category==='Business' ? 'selected' : '' %>>Business</option>
+        <option value="Concert" <%= eve.category==='Concert' ? 'selected' : '' %>>Concert</option>
+        <option value="Meetup" <%= eve.category==='Meetup' ? 'selected' : '' %>>Meetup</option>
+        <option value="Exhibition" <%= eve.category==='Exhibition' ? 'selected' : '' %>>Exhibition</option>
+        <option value="Hackathon" <%= eve.category==='Hackathon' ? 'selected' : '' %>>Hackathon</option>
+        <option value="Other" <%= eve.category==='Other' ? 'selected' : '' %>>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Ticket Price</label>
+      <input type="number" name="price" min="0" value="<%= eve.price %>">
+    </div>
+
+    <div class="form-group">
+      <label>Capacity</label>
+      <input type="number" name="capacity" min="1" value="<%= eve.capacity %>" required>
+    </div>
+
+    <button type="submit">Update Event</button>
+  </form>
+</div>
+
+</body>
+</html>

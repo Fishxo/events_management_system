@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - All Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  min-height:100vh;
+  padding:40px;
+  color:#333;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:40px;
+  color:white;
+}
+
+.header h1{
+  font-size:28px;
+}
+
+/* Event Cards Container */
+.events-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+
+/* Individual Event Card */
+.event-card{
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  transition:0.3s;
+}
+
+.event-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* Event Info */
+.event-card h2{
+  color:#3b82f6;
+  margin-bottom:10px;
+}
+
+.event-card p{
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+/* Buttons */
+.button-group{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+}
+
+.button-group button{
+  padding:8px 18px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+  color:white;
+}
+
+.button-group .edit{
+  background:#3b82f6;
+}
+
+.button-group .edit:hover{
+  background:#1e40af;
+}
+
+.button-group .delete{
+  background:#ef4444;
+}
+
+.button-group .delete:hover{
+  background:#b91c1c;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+   <ul>
+        <% ad.forEach(a=>{%>
+      <h1><li><%= a.adminname%>, welcome to view all events page</h1></li>
+  <%  })%>
+    </ul>
+</div>
+    
+<div class="events-container">
+  <% allev.forEach(all => { %>
+    <div class="event-card">
+      <h2><%= all.title %></h2>
+      <p><strong>Description:</strong> <%= all.description %></p>
+      <p><strong>Start:</strong> <%= new Date(all.startDateTime).toLocaleString() %></p>
+      <p><strong>End:</strong> <%= new Date(all.endDateTime).toLocaleString() %></p>
+      <p><strong>Location:</strong> <%= all.location %></p>
+      <p><strong>Category:</strong> <%= all.category %></p>
+      <p><strong>Price:</strong> $<%= all.price %></p>
+      <p><strong>Capacity:</strong> <%= all.capacity %></p>
+
+      
+    </div>
+  <% }) %>
+</div>
+
+</body>
+</html>

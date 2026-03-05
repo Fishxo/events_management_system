@@ -1,4 +1,7 @@
 const event = require('../models/event');
+const admin = require('../models/ADMINlogin');
+const router = require('../route/ADMINhomepage');
+const attender = require('../models/ATTENDER');
 
 //getting a form for creating a new event
 exports.createEVENT = (req,res) =>{
@@ -60,3 +63,113 @@ exports.createdEvent = async (req, res) => {
         return res.send('Something went wrong');
     }
 };
+
+
+//viewing the whole events do admin usind view all event button 
+exports.viewALLevents = async(req,res) => {
+      try{
+        
+        const ad = await admin.find()
+        const allev = await event.find()
+        res.render('ADMINviewallevents',{allev,ad})
+      }catch(err){
+        console.log(err)
+        return res.send('could not fetch events')
+
+      }
+}
+
+
+//getting the edit requiest and passing to update page
+exports.EVENTedit = async(req,res) => {
+    //declaring the event id here
+    const {allId} = req.params;
+    try{
+       const eve = await event.findById(allId);
+        res.render('UPDATEeventpage',{eve})
+    }catch(err){
+        console.log(err)
+        res.send('somthing is wrong')
+    }
+}
+
+//gettign the updated evenet and saving to the database 
+exports.UPDATEDevent = async(req,res) =>{
+    const { title, description, startDateTime, endDateTime, location, category, price, capacity } = req.body;
+    const {eveId} = req.params;
+
+      try{
+        
+        //declaring the new document using the database model
+        const newEVENT = await event.findById(eveId)
+         if(!newEVENT){
+            return  res.send('ther is no event in by this id')
+         }
+
+            newEVENT.title = title,
+            newEVENT.description = description,
+            newEVENT.startDateTime = startDateTime,
+            newEVENT.endDateTime = endDateTime,
+            newEVENT.location = location,
+            newEVENT.category = category,
+            newEVENT.price = price,
+            newEVENT.capacity = capacity,
+        
+            //saving to database
+            await newEVENT.save()
+            return res.send('event updated success')
+      }catch(err){
+        console.log(err)
+        res.send('could not saved your updates')
+      }
+}
+
+//getting a delete event requiest and delete from the database
+exports.DELETEevent = async(req,res) =>{
+    //declaring the event id to use 
+    const {eveId} = req.params;
+     try{
+        const ad = await admin.find();
+        //deleting the selected event
+        await event.findByIdAndDelete(eveId)
+       const allev = await event.find()
+        res.render('ADMINviewallevents',{allev,ad})
+     }catch(err){
+        console.log(err)
+        return res.send('sorry could not deleted')
+     }
+}
+
+//getting the page to manage the events in admin dashbourd
+exports.MANAGEevent = async(req,res) =>{
+   try{
+    //declaring to new variable to get the whole events
+    const even = await event.find()
+        res.render('MANAGEevent',{even})
+   }catch(err){
+    console.log(err)
+    res.send('could not get the managing event page')
+   }
+}
+
+exports.adminhomepage = async(req,res) =>{
+     try{
+        const attend = await attender.countDocuments();
+        const even = await event.countDocuments();
+    res.render('ADMINhomepage',{even,attend})
+     }catch(err){
+        console.log(err)
+        res.send('total number of event has some problem')
+     }
+}
+
+//getting the user management page from admin dashbord
+exports.MANAGEattender = async(req,res) =>{
+    try{
+        const attend = await attender.find();
+         res.render('MANAGEattender',{attend})
+    }catch(err){
+        console.log(err)
+        res.send('could not get attender managing page')
+    }
+}
