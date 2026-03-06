@@ -14,4 +14,5 @@ router.get('/login',attend.login)
 //reciving the data from the attender log in page
 router.post('/loginn',attend.loginn)
 
+
 module.exports = router;

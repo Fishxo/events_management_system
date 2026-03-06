@@ -2,18 +2,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
-//attender schema
+// attender schema
 const attenderSchema = new mongoose.Schema({
-    attendname:String,
-    attendusername:String,
+    attendname: String,
+    attendusername: String,
     attendemail:{
         type:String,
-        unique:true 
+        unique:true
     },
-    attendpassword:String
-})
+    attendpassword: String,
 
-//creating the model
-const Attender = new mongoose.model('Attender',attenderSchema)
+    role:{
+        type:String,
+        enum:["attendee","organizer","admin"],
+        default:"attendee"
+    },
 
-module.exports = Attender
+    organizerRequest:{
+        type:String,
+        enum:["none","pending","rejected","approved"],
+        default:"none"
+    }
+});
+
+// creating the model
+const Attender = mongoose.model('Attender', attenderSchema);
+
+module.exports = Attender;

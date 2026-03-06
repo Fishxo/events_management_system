@@ -18,4 +18,9 @@ router.use('/ADMINhomepage',require('./ADMINhomepage'))
 // getting the attender sign in page 
 router.use('/ATTE',require('./ATTENDERsignin'))
 
+//getting the attender home page 
+router.use('/ATTENDERhomepage',require('./ATTENDERhomepage'))
+
+//getting the organizer routes 
+router.use('/ORGAN',require('./ORGANpage'))
 module.exports = router;

@@ -173,3 +173,79 @@ exports.MANAGEattender = async(req,res) =>{
         res.send('could not get attender managing page')
     }
 }
+
+//getting the edit requiest and the update ejs page 
+exports.EDITattender = async(req,res) =>{
+    //declaring the attender id to use 
+    const {userId} = req.params;
+     try{
+        const attend = await attender.findById(userId);
+        res.render('UPDATEattender',{attend})
+     }catch(err){
+        console.log(err)
+        res.send('could not find the attender update page')
+     }
+}
+
+//getting the updated infos about the attender and save to database 
+exports.UPDATEEattender = async(req,res) =>{
+    const {attendname,attendusername,attendemail,attendpassword} = req.body;
+         const {userId} = req.params;
+     try{
+      const att = await attender.findById(userId);
+      const attend = await attender.find();
+      if(!att){
+        return res.send('no user found by this userId')
+      }
+       att.attendname = attendname,
+       att.attendusername = attendusername,
+       att.attendemail = attendemail,
+       att.attendpassword = attendpassword,
+         await att.save();
+         res.render('MANAGEattender',{attend})
+     }catch(err){
+        console.log(err)
+        res.send('sorry could not update the user')
+     }
+}
+
+//getting the requiest to be the organizer
+// Controller: adminController.js
+
+
+exports.pendings = async (req, res) => {
+  try {
+    // Get all users who requested to be organizer
+    const requests = await attender.find({ organizerRequest: "pending" });
+    
+    // Render admin page with requests
+    res.render("ADMINpendingview", { requests });
+  } catch (err) {
+    console.error(err);
+    res.send("Error fetching requests");
+  }
+};
+
+exports.handleOrganizerRequest = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { action } = req.body; // action = "approve" or "deny"
+
+    const user = await attender.findById(userId);
+    if (!user) return res.send("User not found");
+
+    if (action === "approve") {
+      user.role = "organizer";
+      user.organizerRequest = "approved";
+    } else if (action === "deny") {
+      user.organizerRequest = "denied";
+    }
+
+    await user.save();
+    res.render("ADMINhomepage"); // reload admin page
+  } catch (err) {
+    console.error(err);
+    res.send("Error updating request");
+  }
+};
+

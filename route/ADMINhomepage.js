@@ -31,4 +31,16 @@ router.get('/ADMINhomepage',admin.adminhomepage)
 //getting the users managing page 
 router.get('/MANAGEattender',admin.MANAGEattender)
 
+//getting requiest to update the attender from manage attender page
+router.get('/:userId/editt',admin.EDITattender)
+
+//reciiving the updated attender data 
+router.post('/:userId/updatee',admin.UPDATEEattender)
+
+//reciving the attenders pending requiest
+router.get('/Pending',admin.pendings)
+
+// Approve or deny a request
+router.post("/:userId/requests", admin.handleOrganizerRequest);
+
 module.exports = router;

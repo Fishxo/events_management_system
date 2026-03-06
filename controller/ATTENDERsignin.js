@@ -1,6 +1,7 @@
 
 //importing the attender model
 const attend = require('../models/ATTENDER')
+const eve = require('../models/event')
 
 //getting the attender signin page 
 exports.signin = (req,res) =>{
@@ -41,15 +42,15 @@ exports.login = (req,res) =>{
 //reciving the data from the attender log in page
 exports.loginn = async(req,res) =>{
     const {attendemail,attendpassword} = req.body
+
     try {
+        const events = await eve.find();
         const user = await attend.findOne({ attendemail: attendemail })
-        if(!user){
-            return res.status(400).send('invalid email')
-        }
+        const userId = user._id;
         if(user.attendpassword !== attendpassword){
             return res.status(400).send('invalid password')
         }
-        res.render('ATTENDERhome',{user})
+        res.render('ATTENDERhome',{user,userId,events})
     }catch(err){
         console.log(err)
         res.send('there was an error logging in')
