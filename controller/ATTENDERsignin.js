@@ -40,19 +40,36 @@ exports.login = (req,res) =>{
 
 
 //reciving the data from the attender log in page
-exports.loginn = async(req,res) =>{
-    const {attendemail,attendpassword} = req.body
+// controller/ATTENDERsignin.js
+
+
+exports.loginn = async (req, res) => {
+    const { attendemail, attendpassword } = req.body;
 
     try {
-        const events = await eve.find();
-        const user = await attend.findOne({ attendemail: attendemail })
-        const userId = user._id;
-        if(user.attendpassword !== attendpassword){
-            return res.status(400).send('invalid password')
+        // Find user by email
+        const user = await attend.findOne({ attendemail: attendemail });
+        if (!user) {
+            return res.status(400).send('User not found');
         }
-        res.render('ATTENDERhome',{user,userId,events})
-    }catch(err){
-        console.log(err)
-        res.send('there was an error logging in')
+
+        // Check password
+        if (user.attendpassword !== attendpassword) {
+            return res.status(400).send('Invalid password');
+        }
+
+        // Save user info in session
+        req.session.userId = user._id;
+        req.session.attendname = user.attendname; // optional, for greetings
+
+        // Fetch events
+        const events = await eve.find();
+
+        // Render page (no need to pass userId, you can get it from session)
+        res.render('ATTENDERhome', { user, events });
+
+    } catch (err) {
+        console.log(err);
+        res.send('There was an error logging in');
     }
-}
+};

@@ -226,10 +226,14 @@ exports.pendings = async (req, res) => {
   }
 };
 
+
+//handling the attender status after the admin approve or denined the attender requiest 
 exports.handleOrganizerRequest = async (req, res) => {
   try {
     const { userId } = req.params;
     const { action } = req.body; // action = "approve" or "deny"
+    // Get all users who requested to be organizer
+    const requests = await attender.find({ organizerRequest: "pending" });
 
     const user = await attender.findById(userId);
     if (!user) return res.send("User not found");
@@ -238,11 +242,11 @@ exports.handleOrganizerRequest = async (req, res) => {
       user.role = "organizer";
       user.organizerRequest = "approved";
     } else if (action === "deny") {
-      user.organizerRequest = "denied";
+      user.organizerRequest = "rejected";
     }
 
     await user.save();
-    res.render("ADMINhomepage"); // reload admin page
+    res.render("ADMINpendingview",{requests}); // reload admin page
   } catch (err) {
     console.error(err);
     res.send("Error updating request");

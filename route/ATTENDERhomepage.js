@@ -8,4 +8,7 @@ router.get('/events',attend.FETCHevents)
 //recieving the requiest from the user to be organizer
 router.post('/:userId/reuiestORGANIZER',attend.TOBEorganizer)
 
+//requiesting for events to join 
+router.post('/:userId/register',attend.registering)
+
 module.exports = router;

@@ -6,7 +6,9 @@ const event = require('../models/event')
 
 //getting the events from user side 
 exports.FETCHevents = async(req,res) =>{
+    
      try {
+        
         const allev = await event.find();
         res.render('ATTENDERallevent',{allev})
      }catch(err){
@@ -38,3 +40,9 @@ exports.TOBEorganizer = async (req, res) => {
         res.send("Something went wrong");
     }
 };
+
+//requiesing to join the event from the attender side 
+exports.registering = (req,res) =>{
+    const {userId} = req.params;
+
+}

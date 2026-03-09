@@ -1,19 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - All Events</title>
+<title>All Events</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
-*{
+* {
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+  font-family:'Poppins', sans-serif;
 }
 
-body{
+body {
   background: linear-gradient(135deg,#667eea,#764ba2);
   min-height:100vh;
   padding:40px;
@@ -21,105 +23,104 @@ body{
 }
 
 /* Header */
-.header{
+.header {
   text-align:center;
   margin-bottom:40px;
   color:white;
 }
 
 .header h1{
-  font-size:28px;
+  font-size:32px;
+  font-weight:700;
 }
 
-/* Event Cards Container */
-.events-container{
+/* Events Grid */
+.events-container {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:25px;
 }
 
-/* Individual Event Card */
-.event-card{
-  background:#fff;
+/* Event Card */
+.event-card {
+  background:white;
   padding:25px;
   border-radius:20px;
   box-shadow:0 8px 25px rgba(0,0,0,0.15);
   transition:0.3s;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 
-.event-card:hover{
+.event-card:hover {
   transform:translateY(-5px);
   box-shadow:0 12px 30px rgba(0,0,0,0.25);
 }
 
-/* Event Info */
-.event-card h2{
+.event-card h2 {
   color:#3b82f6;
   margin-bottom:10px;
+  font-size:20px;
 }
 
-.event-card p{
-  margin-bottom:6px;
+.event-card p {
   font-size:14px;
+  margin-bottom:6px;
+  color:#555;
 }
 
-/* Buttons */
-.button-group{
+/* Button */
+.event-card button {
   margin-top:15px;
-  display:flex;
-  gap:10px;
-}
-
-.button-group button{
-  padding:8px 18px;
+  padding:10px 20px;
   border:none;
   border-radius:25px;
-  cursor:pointer;
-  font-weight:600;
-  transition:0.3s;
-  color:white;
-}
-
-.button-group .edit{
   background:#3b82f6;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-.button-group .edit:hover{
+.event-card button:hover {
   background:#1e40af;
 }
 
-.button-group .delete{
-  background:#ef4444;
+/* Responsive */
+@media(max-width:600px){
+  .events-container {
+    grid-template-columns:1fr;
+  }
 }
-
-.button-group .delete:hover{
-  background:#b91c1c;
-}
-
 </style>
 </head>
+
 <body>
 
-<h2>here is all Available events </h2>
-    
-<div class="events-container">
-  <% allev.forEach(all => { %>
-   <form action="/ATTENDERhomepage/<%= all._id%>/register" method="post">
-     <div class="event-card">
-      <h2><%= all.title %></h2>
-      <p><strong>Description:</strong> <%= all.description %></p>
-      <p><strong>Start:</strong> <%= new Date(all.startDateTime).toLocaleString() %></p>
-      <p><strong>End:</strong> <%= new Date(all.endDateTime).toLocaleString() %></p>
-      <p><strong>Location:</strong> <%= all.location %></p>
-      <p><strong>Category:</strong> <%= all.category %></p>
-      <p><strong>Price:</strong> $<%= all.price %></p>
-      <p><strong>Capacity:</strong> <%= all.capacity %></p>
+<div class="header">
+  <h1>Available Events</h1>
+</div>
 
-      
+<div class="events-container">
+<% allev.forEach(all => { %>
+  <form class="event-form" action="/ATTENDERhomepage/<%= all._id %>/register" method="post">
+    <div class="event-card">
+      <div>
+        <h2><%= all.title %></h2>
+        <p><strong>Description:</strong> <%= all.description %></p>
+        <p><strong>Start:</strong> <%= new Date(all.startDateTime).toLocaleString() %></p>
+        <p><strong>End:</strong> <%= new Date(all.endDateTime).toLocaleString() %></p>
+        <p><strong>Location:</strong> <%= all.location %></p>
+        <p><strong>Category:</strong> <%= all.category %></p>
+        <p><strong>Price:</strong> $<%= all.price %></p>
+        <p><strong>Capacity:</strong> <%= all.capacity %></p>
+      </div>
+      <!-- Pass user ID here -->
+      <button type="submit">Join Event</button>
     </div>
-    <button type="submit">join event</button>
-   </form>
-  <% }) %>
+  </form>
+<% }) %>
 </div>
 
 </body>
