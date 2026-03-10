@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Registered Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+header h2 {
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 16px;
+  color: #e0e0ff;
+}
+
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.card h3 {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Cancel button styling */
+.card form {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.card form button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card form button:hover {
+  background: #b91c1c;
+}
+
+.no-events {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 50px;
+  color: #ffe;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>My Registered Events</h2>
+  <p>Keep track of your upcoming events</p>
+</header>
+
+<div class="events-container">
+  <% if (!regi || regi.length === 0) { %>
+    <p class="no-events">You have not joined any events yet.</p>
+  <% } else { %>
+    <% regi.forEach(r => { %>
+      <div class="card">
+        <h3><%= r.eventId.title %></h3>
+        <p><strong>Date:</strong> <%= new Date(r.eventId.startDateTime).toLocaleString() %></p>
+        <p><strong>Location:</strong> <%= r.eventId.location %></p>
+        <p><strong>Category:</strong> <%= r.eventId.category %></p>
+        <p><strong>Price:</strong> $<%= r.eventId.price %></p>
+
+        <!-- Cancel Event Button -->
+        <form action="/ATTENDERhomepage/<%= r.eventId._id%>/deleteMYevent" method="post">
+          <input type="hidden" name="regiId" value="<%= r._id %>">
+          <button type="submit">Cancel Event</button>
+        </form>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+</body>
+</html>

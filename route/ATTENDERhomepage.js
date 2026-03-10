@@ -9,6 +9,11 @@ router.get('/events',attend.FETCHevents)
 router.post('/:userId/reuiestORGANIZER',attend.TOBEorganizer)
 
 //requiesting for events to join 
-router.post('/:userId/register',attend.registering)
+router.post('/:eventId/register',attend.registering)
 
+//getting the registered events from the attender side
+router.get('/myevents',attend.MYevents)
+
+//deletng the register event in specifice
+router.post('/:eventId/deleteMYevent', attend.deleteMYevents)
 module.exports = router;

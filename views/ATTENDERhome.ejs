@@ -44,7 +44,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
 
   <form action="/ATTE/home" method="get"><button type="submit" class="nav-btn">🏠 Home</button></form>
   <form action="/ATTENDERhomepage/events" method="get"><button type="submit" class="nav-btn">🎉 Available Events</button></form>
-  <form action="/myevents" method="get"><button type="submit" class="nav-btn">📅 My Events</button></form>
+  <form action="/ATTENDERhomepage/myevents" method="get"><button type="submit" class="nav-btn">📅 My Events</button></form>
   <form action="/account" method="get"><button type="submit" class="nav-btn">👤 My Account</button></form>
 
   <% if(user.role !== "organizer") { %>
@@ -57,12 +57,13 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
 <div class="main">
   <div class="header">
     <h1>Welcome Back, <%= user.attendname %> 👋</h1>
+    <p>my attender id </p> : <%= attenderId%>
   </div>
 
   <!-- Stats Section -->
   <div class="stats">
     <div class="stat-box">
-      <h3>12</h3>
+      <h3><%= even%></h3>
       <p>Available Events</p>
     </div>
     <div class="stat-box">
@@ -70,7 +71,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
       <p>My Registered Events</p>
     </div>
     <div class="stat-box">
-      <h3>1</h3>
+      <h3><%= upcome%></h3>
       <p>Upcoming This Week</p>
     </div>
   </div>
@@ -80,7 +81,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
     <div class="actions">
       <form action="/ORGAN/<%= user._id%>/CREATEevents" method="get"><button>Create New Event</button></form>
     </div>
-
+       
     <h2>My Events</h2>
     <% events.forEach(ev => { %>
       <div class="card">

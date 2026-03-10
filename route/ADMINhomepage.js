@@ -43,5 +43,4 @@ router.get('/Pending',admin.pendings)
 // Approve or deny a request
 router.post("/:userId/requests", admin.handleOrganizerRequest);
 
-
 module.exports = router;

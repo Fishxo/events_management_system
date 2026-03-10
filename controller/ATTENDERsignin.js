@@ -1,6 +1,7 @@
 
 //importing the attender model
 const attend = require('../models/ATTENDER')
+const event = require('../models/event')
 const eve = require('../models/event')
 
 //getting the attender signin page 
@@ -59,14 +60,27 @@ exports.loginn = async (req, res) => {
         }
 
         // Save user info in session
-        req.session.userId = user._id;
+        req.session.attenderId = user._id;
         req.session.attendname = user.attendname; // optional, for greetings
 
+        //getting the upcoming events in attender page
+         const now = new Date()
+          const weeklater = new Date();
+          weeklater.setDate(now.getDate() + 7)
+
+          const upcomin = await eve.find({
+            startDateTime: {$gt:now,$lt:weeklater} })
+
+            const upcome = await eve.countDocuments({
+                startDateTime :{$gt:now,$lt:weeklater}
+            })
+         const even = await event.countDocuments()
+         
         // Fetch events
         const events = await eve.find();
-
+            
         // Render page (no need to pass userId, you can get it from session)
-        res.render('ATTENDERhome', { user, events });
+        res.render('ATTENDERhome', { user, events,upcomin,upcome,even});
 
     } catch (err) {
         console.log(err);

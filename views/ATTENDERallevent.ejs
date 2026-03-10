@@ -101,7 +101,7 @@ body {
 <div class="header">
   <h1>Available Events</h1>
 </div>
-
+<%= attenderId%>
 <div class="events-container">
 <% allev.forEach(all => { %>
   <form class="event-form" action="/ATTENDERhomepage/<%= all._id %>/register" method="post">

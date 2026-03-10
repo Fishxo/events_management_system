@@ -15,6 +15,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+//declaring in the userId in every ejs page using session
+app.use((req, res, next) => {
+  res.locals.attenderId = req.session.attenderId;
+  next();
+});
 
 //getting the route folder 
 app.use('/',require('./route/first'))

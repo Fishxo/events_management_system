@@ -1,7 +1,7 @@
 //importing the mmodels 
 const Attender = require('../models/ATTENDER');
 const event = require('../models/event')
-
+const registered = require('../models/REGISRTRATIONevents')
 
 
 //getting the events from user side 
@@ -42,7 +42,57 @@ exports.TOBEorganizer = async (req, res) => {
 };
 
 //requiesing to join the event from the attender side 
-exports.registering = (req,res) =>{
-    const {userId} = req.params;
+exports.registering = async(req,res) =>{
+    const attenderId = req.session.attenderId;
+    const {eventId} = req.params;     
+       
+    try{
+        //cheching if they already registered
+        const exist = await registered.findOne({eventId,attenderId})
+         if(exist){
+            return res.send('you already joined this event')
+         }
+    
+         //creating registration for event if they are not registered already
+         const register = new registered({eventId,attenderId})
+         await register.save()
+         console.log(attenderId)
+         console.log(eventId)
 
+         return res.send('you joined the event')
+
+    }catch(err){
+        console.log(err)
+        return res.send('could not join')
+    }
+
+}
+
+//getting the attender registered events and and fetching to the database
+exports.MYevents = async(req,res) =>{
+            try{
+                    const regi = await registered.find({attenderId:req.session.attenderId})
+                    .populate('eventId')
+                    .populate('attenderId')
+                    res.render('ATTENDERMyEvents',{regi})
+            }catch(err){
+                console.log(err)
+                res.send('could not fetch your events')
+            }
+}
+
+//getting delet requiest to registered events from the attender
+exports.deleteMYevents = async(req,res) =>{
+        const attenderId = req.session.attenderId;
+        const {eventId} = req.params;
+         try{
+         await registered.findOneAndDelete(eventId);
+         const regi = await registered.find({attenderId:req.session.attenderId})
+         .populate('attenderId')
+         .populate('eventId')
+          res.render('ATTENDERMyEvents',{regi})
+         }catch(err){
+            console.log(err)
+            return res.send('could not delete the event')
+         }
 }
