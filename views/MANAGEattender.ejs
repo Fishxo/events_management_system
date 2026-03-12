@@ -145,16 +145,16 @@ body {
 <!-- Sidebar -->
 <div class="sidebar">
   <h2>Admin Panel</h2>
-  <form action="/ADMINhomepage/ADMINhomepage"><button>🏠 Dashboard</button></form>
-  <form action="/ADMINhomepage/MANAGEevents" method="get"><button>👥 Manage Users</button></form>
-  <button onclick="showSection('events')">📅 Manage Events</button>
-  <button onclick="showSection('reports')">📊 Reports</button>
-  <button onclick="location.href='/logout'">🚪 Logout</button>
+  <form action="/ADMINhomepage/ADMINhomepage"><button type="submit">🏠 Dashboard</button></form>
+  <form action="/ADMINhomepage/controllerATTENDER" method="get"><button type="submit">👥 Manage Users</button></form>
+  <form action="/ADMINhomepage/MANAGEevents" method="get"><button type="submit" >📅 Manage Events</button></form>
+  <form action="/ADMINhomepage/reports" method="get"><button type="submit" >📅 Manage Events</button></form>
+ <form action="/ADMINhomepage/logout" method="get"> <button type="submit">🚪 Logout</button></form>
 </div>
 
 <!-- Main content -->
 <div class="main">
-
+<h1>hello this is user managing page for admins </h1>
   <div class="header">
     <h1>Manage Users</h1>
   </div>

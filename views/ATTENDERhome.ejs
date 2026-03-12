@@ -12,11 +12,61 @@
 body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea,#764ba2); }
 .sidebar { width:240px; background:#1f1f2e; padding:30px 20px; color:#fff; display:flex; flex-direction:column; }
 .sidebar h2 { margin-bottom:40px; text-align:center; font-weight:700; }
-.nav-btn, .organizer-btn { width:100%; padding:12px; border:none; border-radius:12px; cursor:pointer; font-size:15px; transition:0.3s; margin-bottom:15px; }
-.nav-btn { background:#2c2c3e; color:white; }
-.nav-btn:hover { background:linear-gradient(135deg,#667eea,#764ba2); transform:translateX(5px); }
-.organizer-btn { background:linear-gradient(135deg,#ff7e5f,#feb47b); color:white; font-weight:600; margin-top:auto; }
-.organizer-btn:hover { background:linear-gradient(135deg,#feb47b,#ff7e5f); transform:translateX(5px); }
+/* Sidebar Buttons */
+.nav-btn {
+  width:100%;
+  padding:14px 16px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:500;
+  color:#e5e7eb;
+  background:linear-gradient(145deg,#2b2d42,#1f2235);
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+  transition:all .25s ease;
+  margin-bottom:14px;
+  text-align:left;
+}
+
+/* Hover */
+.nav-btn:hover {
+  transform:translateX(6px);
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:white;
+  box-shadow:0 8px 18px rgba(102,126,234,.35);
+}
+
+/* Click */
+.nav-btn:active {
+  transform:scale(.98);
+}
+
+/* Active page */
+.nav-btn.active {
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:white;
+  box-shadow:0 8px 18px rgba(102,126,234,.35);
+}
+.organizer-btn{
+  width:100%;
+  padding:14px 16px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:600;
+  color:white;
+  background:linear-gradient(135deg,#ff7e5f,#feb47b);
+  box-shadow:0 6px 16px rgba(255,126,95,.35);
+  transition:all .25s ease;
+  margin-top:auto;
+}
+
+.organizer-btn:hover{
+  transform:translateX(6px);
+  box-shadow:0 10px 22px rgba(255,126,95,.45);
+}
 .main { flex:1; padding:40px; overflow-y:auto; background:#f5f7fb; border-top-left-radius:30px; border-bottom-left-radius:30px; }
 .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
 .header h1 { color:#333; }
@@ -42,11 +92,16 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
 <div class="sidebar">
   <h2>Evently</h2>
 
-  <form action="/ATTE/home" method="get"><button type="submit" class="nav-btn">🏠 Home</button></form>
+  <form action="/ATTENDERhomepage/home" method="get"><button type="submit" class="nav-btn">🏠 Home</button></form>
   <form action="/ATTENDERhomepage/events" method="get"><button type="submit" class="nav-btn">🎉 Available Events</button></form>
-  <form action="/ATTENDERhomepage/myevents" method="get"><button type="submit" class="nav-btn">📅 My Events</button></form>
-  <form action="/account" method="get"><button type="submit" class="nav-btn">👤 My Account</button></form>
-
+  <form action="/ATTENDERhomepage/myevents" method="get"><button type="submit" class="nav-btn">📅 joined events</button></form>
+  <% if(user.role == "organizer") {%>
+    <form action="/ATTENDERhomepage/MINEevents" method="get" class="nav-btn"><button type="submit">📂 My Events</button></form>
+  <%}%>
+  <form action="/ATTENDERhomepage/account" method="get"><button type="submit" class="nav-btn">👤 My Account</button></form>
+  <form action="/ATTE/logout" method="get">
+    <button class="nav-btn" type="submit">🚪 Logout</button>
+  </form>
   <% if(user.role !== "organizer") { %>
     <!-- Only show request button for non-organizers -->
     <button class="organizer-btn" data-userid="<%= user._id %>">🎤 Request to be Organizer</button>
@@ -57,7 +112,10 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
 <div class="main">
   <div class="header">
     <h1>Welcome Back, <%= user.attendname %> 👋</h1>
-    <p>my attender id </p> : <%= attenderId%>
+    <% if(user.role == "organizer") {%>
+       <p>you are organizer now you can create events</p>
+    <%}%>
+    
   </div>
 
   <!-- Stats Section -->
@@ -67,7 +125,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
       <p>Available Events</p>
     </div>
     <div class="stat-box">
-      <h3>3</h3>
+      <h3><%= join%></h3>
       <p>My Registered Events</p>
     </div>
     <div class="stat-box">
@@ -87,12 +145,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
       <div class="card">
         <h3><%= ev.title %></h3>
         <p>Date: <%= ev.date %></p>
-        <form action="/events/<%= ev._id %>/edit" method="get" style="display:inline;">
-          <button>Edit</button>
-        </form>
-        <form action="/events/<%= ev._id %>/delete" method="POST" style="display:inline;">
-          <button>Delete</button>
-        </form>
+       
       </div>
     <% }) %>
   <% } else { %>

@@ -3,6 +3,41 @@ const Attender = require('../models/ATTENDER');
 const event = require('../models/event')
 const registered = require('../models/REGISRTRATIONevents')
 
+//getting the attender homepage from the attender homepage
+exports.home = async(req,res) =>{
+      try{
+        // Save user info in session
+       const attenderId = req.session.attenderId;
+       if(!attenderId){return res.redirect('/login')}
+       const user = await Attender.findById(attenderId)
+
+        // optional, for greetings
+        //getting the upcoming events in attender page
+                const now = new Date()
+                const weeklater = new Date();
+                weeklater.setDate(now.getDate() + 7)
+
+                const upcomin = await event.find({
+                    startDateTime: {$gt:now,$lt:weeklater} })
+
+                    const upcome = await event.countDocuments({
+                        startDateTime :{$gt:now,$lt:weeklater}
+                    })
+                const even = await event.countDocuments()
+                
+                // Fetch events
+                const events = await event.find();
+
+                //showing the amount of the attenders have joined 
+                const join = await registered.countDocuments({attenderId});
+
+                 res.render('ATTENDERhome',{user,events,upcome,upcomin,even,join})
+      }catch(err){
+        console.log(err)
+        res.send('could not get the homepage')
+      }
+   
+}                 
 
 //getting the events from user side 
 exports.FETCHevents = async(req,res) =>{
@@ -95,4 +130,17 @@ exports.deleteMYevents = async(req,res) =>{
             console.log(err)
             return res.send('could not delete the event')
          }
+}
+
+//gettingt or organizer the events that created by organizer
+exports.MINEevents = async(req,res) =>{
+   const organizerId = req.session.attenderId;
+   try{
+    const eve = await event.find({organId:organizerId})
+   console.log(organizerId)
+    res.render('MINEeventsFOROrgan',{eve})
+   }catch(err){
+    console.log(err)
+    res.send('could not get this page')
+   }
 }

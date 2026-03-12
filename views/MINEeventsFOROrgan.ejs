@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  padding:40px 20px;
+  color:#fff;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:30px;
+  font-size:32px;
+  font-weight:700;
+}
+
+.card{
+  background:#fff;
+  color:#333;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  margin-bottom:20px;
+  transition:0.25s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 14px 32px rgba(0,0,0,0.25);
+}
+
+.card h3{
+  color:#667eea;
+  margin-bottom:12px;
+  font-size:20px;
+}
+
+.card p{
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+.card form{
+  display:inline-block;
+  margin-top:12px;
+  margin-right:8px;
+}
+
+button{
+  border:none;
+  padding:8px 16px;
+  border-radius:20px;
+  font-size:13px;
+  cursor:pointer;
+  color:white;
+  transition:0.2s;
+}
+
+/* Edit */
+button[type="submit"]{
+  background:#27ae60;
+}
+
+button[type="submit"]:hover{
+  background:#1e8449;
+}
+
+/* Delete (second button in card) */
+.card form:last-child button{
+  background:#e74c3c;
+}
+
+.card form:last-child button:hover{
+  background:#c0392b;
+}
+
+hr{
+  border:none;
+  height:1px;
+  background:rgba(255,255,255,0.25);
+  margin:18px 0;
+}
+
+.container > p{
+  text-align:center;
+  font-size:18px;
+  opacity:0.9;
+}
+</style>
+
+<body>
+    <div class="container">
+  <h2>My Created Events</h2>
+
+  <% if (!eve || eve.length === 0) { %>
+    <p>No events created yet.</p>
+  <% } else { %>
+    <% eve.forEach(e => { %>
+      <div class="card">
+        <h3><%= e.title %></h3>
+        <p><strong>Date:</strong> <%= new Date(e.startDateTime).toLocaleString() %></p>
+        <p><strong>Location:</strong> <%= e.location %></p>
+        <p><strong>Category:</strong> <%= e.category %></p>
+
+        <form action="/ADMINhomepage/<%= e._id %>/edit" method="get" style="display:inline;">
+          <button type="submit">Edit</button>
+        </form>
+
+        <form action="/ORGAN/<%= e._id %>/deleteOWN" method="post" style="display:inline;">
+          <button type="submit" onclick="return confirm('are sure you want to delete event')">Delete</button>
+        </form>
+      </div>
+      <hr>
+    <% }) %>
+  <% } %>
+</div>
+</body>
+</html>

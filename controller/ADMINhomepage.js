@@ -53,7 +53,9 @@ exports.createdEvent = async (req, res) => {
             location,
             category,
             price,
-            capacity
+            capacity,
+            
+            organId: req.session.attenderId
         });
 
         return res.send('Event created successfully');
@@ -253,3 +255,9 @@ exports.handleOrganizerRequest = async (req, res) => {
   }
 };
 
+
+
+//getting the admin logout requiest and redirect to admin login page 
+exports.logout = (req,res) => {
+  res.render('ADMINlogin')
+}

@@ -4,130 +4,204 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manage Events</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#1e3c72,#2a5298);
-min-height:100vh;
-padding:40px;
-color:white;
+  display:flex;
+  min-height:100vh;
+  background:linear-gradient(135deg,#1e3c72,#2a5298);
 }
 
-h1{
-text-align:center;
-margin-bottom:40px;
+/* ===== Sidebar (Left) ===== */
+.sidebar{
+  width:260px;
+  background:#111827;
+  padding:30px 20px;
+  color:white;
+  display:flex;
+  flex-direction:column;
 }
 
+.sidebar h2{
+  text-align:center;
+  margin-bottom:40px;
+  font-weight:700;
+  color:#60a5fa;
+}
+
+.sidebar form{
+  margin-bottom:12px;
+}
+
+.sidebar button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#1f2937;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:14px;
+}
+
+.sidebar button:hover{
+  background:#3b82f6;
+  transform:translateX(5px);
+}
+
+/* ===== Main Content (Right) ===== */
+.main{
+  flex:1;
+  padding:40px;
+  overflow-y:auto;
+}
+
+.main h1{
+  text-align:center;
+  margin-bottom:40px;
+  color:white;
+}
+
+/* ===== Events Grid ===== */
 .events-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:25px;
 }
 
+/* ===== Event Card ===== */
 .event-card{
-background:white;
-color:#333;
-border-radius:15px;
-padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-transition:0.3s;
+  background:white;
+  color:#333;
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transition:0.3s;
 }
 
 .event-card:hover{
-transform:translateY(-5px);
+  transform:translateY(-5px);
 }
 
 .event-title{
-font-size:20px;
-font-weight:600;
-margin-bottom:10px;
-color:#2a5298;
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:10px;
+  color:#2a5298;
 }
 
 .event-info{
-margin:5px 0;
-font-size:14px;
+  margin:5px 0;
+  font-size:14px;
 }
 
+/* ===== Buttons ===== */
 .buttons{
-margin-top:15px;
-display:flex;
-justify-content:space-between;
+  margin-top:15px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
 }
 
-button{
-padding:8px 15px;
-border:none;
-border-radius:20px;
-cursor:pointer;
-font-size:13px;
+.buttons form{
+  flex:1;
+}
+
+.buttons button{
+  width:100%;
+  padding:8px 15px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+  color:white;
+  transition:0.3s;
 }
 
 .update{
-background:#27ae60;
-color:white;
+  background:#27ae60;
 }
 
 .update:hover{
-background:#1e8449;
+  background:#1e8449;
 }
 
 .delete{
-background:#e74c3c;
-color:white;
+  background:#e74c3c;
 }
 
 .delete:hover{
-background:#c0392b;
+  background:#c0392b;
 }
-
 </style>
 </head>
+
 <body>
 
-<h1>Manage Events</h1>
+<!-- Sidebar -->
+<div class="sidebar">
+  <h2>Admin Panel</h2>
 
-<div class="events-container">
+  <form action="/ADMINhomepage/ADMINhomepage" method="get">
+    <button>🏠 Dashboard</button>
+  </form>
 
-<% even.forEach(ev => { %>
+  <form action="/ADMINhomepage/controllerATTENDER" method="get">
+    <button>👥 Manage Users</button>
+  </form>
 
-<div class="event-card">
+  <form action="/ADMINhomepage/MANAGEevents" method="get">
+    <button>📅 Manage Events</button>
+  </form>
 
-<div class="event-title"><%= ev.title %></div>
+  <form action="/ADMINhomepage/reports" method="get">
+    <button>📊 Reports</button>
+  </form>
 
-<p class="event-info"><strong>Description:</strong> <%= ev.description %></p>
-<p class="event-info"><strong>Location:</strong> <%= ev.location %></p>
-<p class="event-info"><strong>Category:</strong> <%= ev.category %></p>
-<p class="event-info"><strong>Price:</strong> $<%= ev.price %></p>
-<p class="event-info"><strong>Capacity:</strong> <%= ev.capacity %></p>
-
-<div class="buttons">
-
-<form action="/ADMINhomepage/<%= ev._id %>/edit" method="get">
-<button class="update">Update</button>
-</form>
-
-<form action="/ADMINhomepage/<%= ev._id %>/delete" method="post"
-onsubmit="return confirm('Are you sure you want to delete this event?')">
-<button class="delete">Delete</button>
-</form>
-
+  <form action="/ADMINhomepage/logout" method="get">
+    <button>🚪 Logout</button>
+  </form>
 </div>
 
-</div>
+<!-- Main Content -->
+<div class="main">
+  <h1>Manage Events</h1>
 
-<% }) %>
+  <div class="events-container">
+    <% even.forEach(ev => { %>
 
+      <div class="event-card">
+        <div class="event-title"><%= ev.title %></div>
+
+        <p class="event-info"><strong>Description:</strong> <%= ev.description %></p>
+        <p class="event-info"><strong>Location:</strong> <%= ev.location %></p>
+        <p class="event-info"><strong>Category:</strong> <%= ev.category %></p>
+        <p class="event-info"><strong>Price:</strong> $<%= ev.price %></p>
+        <p class="event-info"><strong>Capacity:</strong> <%= ev.capacity %></p>
+
+        <div class="buttons">
+          <form action="/ADMINhomepage/<%= ev._id %>/edit" method="get">
+            <button class="update">Update</button>
+          </form>
+
+          <form action="/ADMINhomepage/<%= ev._id %>/delete" method="post"
+                onsubmit="return confirm('Are you sure you want to delete this event?')">
+            <button class="delete">Delete</button>
+          </form>
+        </div>
+      </div>
+
+    <% }) %>
+  </div>
 </div>
 
 </body>

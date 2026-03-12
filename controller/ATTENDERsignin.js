@@ -3,6 +3,7 @@
 const attend = require('../models/ATTENDER')
 const event = require('../models/event')
 const eve = require('../models/event')
+const registered = require('../models/REGISRTRATIONevents')
 
 //getting the attender signin page 
 exports.signin = (req,res) =>{
@@ -62,6 +63,8 @@ exports.loginn = async (req, res) => {
         // Save user info in session
         req.session.attenderId = user._id;
         req.session.attendname = user.attendname; // optional, for greetings
+        //defining the attenderId here
+        const attenderId = user._id;
 
         //getting the upcoming events in attender page
          const now = new Date()
@@ -78,12 +81,17 @@ exports.loginn = async (req, res) => {
          
         // Fetch events
         const events = await eve.find();
-            
+            //showing the amount of the event the attender joind in attender home page 
+            const join = await registered.countDocuments({attenderId})
         // Render page (no need to pass userId, you can get it from session)
-        res.render('ATTENDERhome', { user, events,upcomin,upcome,even});
+        res.render('ATTENDERhome', { user, events,upcomin,upcome,even,join});
 
     } catch (err) {
         console.log(err);
         res.send('There was an error logging in');
     }
 };
+
+    exports.logout = (req,res) =>{
+        res.redirect('/ATTE/login')
+    }

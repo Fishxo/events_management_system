@@ -55,8 +55,21 @@ const eventSchema = new mongoose.Schema({
     type: Number,
     min: 1,
     required: true
-  }
+  },
+  organId : {
+   type : mongoose.Schema.Types.ObjectId,
+   ref : 'attender'
+ },
+attendees: [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Attender'
+}],
 
-}, { timestamps: true });
+},
+
+
+{ timestamps: true });
+
+ 
 
 module.exports = mongoose.model('Event', eventSchema);

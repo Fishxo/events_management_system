@@ -13,7 +13,9 @@ app.set('view engine','ejs')
 app.use(session({
   secret: 'yourSecretKey',  // anything random, used to sign session ID
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
+
 }));
 //declaring in the userId in every ejs page using session
 app.use((req, res, next) => {

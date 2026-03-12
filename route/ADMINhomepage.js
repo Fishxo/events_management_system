@@ -29,7 +29,7 @@ router.get('/MANAGEevents',admin.MANAGEevent)
 router.get('/ADMINhomepage',admin.adminhomepage)
 
 //getting the users managing page 
-router.get('/MANAGEattender',admin.MANAGEattender)
+router.get('/controllerATTENDER',admin.MANAGEattender)
 
 //getting requiest to update the attender from manage attender page
 router.get('/:userId/editt',admin.EDITattender)
@@ -40,7 +40,10 @@ router.post('/:userId/updatee',admin.UPDATEEattender)
 //reciving the attenders pending requiest
 router.get('/Pending',admin.pendings)
 
+//getting the admin login reqiest and redirect admin login page 
+router.get('/logout',admin.logout)
 // Approve or deny a request
 router.post("/:userId/requests", admin.handleOrganizerRequest);
+
 
 module.exports = router;

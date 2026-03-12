@@ -11,6 +11,9 @@ router.post('/signinn',attend.signinn)
 //getting the log in page for the attenders thos sign in befor
 router.get('/login',attend.login)
 
+//getting the logout requiest and redirecting to login page
+router.get('/logout',attend.logout)
+
 //reciving the data from the attender log in page
 router.post('/loginn',attend.loginn)
 
