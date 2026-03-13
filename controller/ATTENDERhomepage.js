@@ -105,23 +105,34 @@ exports.registering = async(req,res) =>{
 
 //getting the attender registered events and and fetching to the database
 exports.MYevents = async(req,res) =>{
+    const userId = req.session.attenderId;
             try{
                     const regi = await registered.find({attenderId:req.session.attenderId})
                     .populate('eventId')
                     .populate('attenderId')
-                    res.render('ATTENDERMyEvents',{regi})
+                    res.render('ATTENDERMyEvents',{regi,userId})
             }catch(err){
                 console.log(err)
                 res.send('could not fetch your events')
             }
 }
-
+exports.MINEevents = async(req,res) =>{
+   const organizerId = req.session.attenderId;
+   try{
+    const eve = await event.find({organId:organizerId})
+   console.log(organizerId)
+    res.render('MINEeventsFOROrgan',{eve,organizerId})
+   }catch(err){
+    console.log(err)
+    res.send('could not get this page')
+   }
+}
 //getting delet requiest to registered events from the attender
 exports.deleteMYevents = async(req,res) =>{
         const attenderId = req.session.attenderId;
         const {eventId} = req.params;
          try{
-         await registered.findOneAndDelete(eventId);
+         await registered.findOneAndDelete({eventId,attenderId});
          const regi = await registered.find({attenderId:req.session.attenderId})
          .populate('attenderId')
          .populate('eventId')
@@ -143,4 +154,16 @@ exports.MINEevents = async(req,res) =>{
     console.log(err)
     res.send('could not get this page')
    }
+}
+
+//getting attender account info page
+exports.account = async(req,res) =>{
+    const {userId} = req.params;
+     try{
+        const user = await Attender.findById(userId)
+        res.render('ATTENDERaccount',{user})
+     }catch(err){
+        console.log(err)
+        res.send('something is wrong')
+     }
 }

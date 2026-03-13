@@ -22,4 +22,8 @@ router.get('/MINEevents',attend.MINEevents)
 
 //deletng the register event in specifice
 router.post('/:eventId/deleteMYevent', attend.deleteMYevents)
+
+//getting the account page from the attender side 
+router.get('/:userId/account',attend.account)
+
 module.exports = router;

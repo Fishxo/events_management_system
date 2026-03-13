@@ -98,7 +98,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
   <% if(user.role == "organizer") {%>
     <form action="/ATTENDERhomepage/MINEevents" method="get" class="nav-btn"><button type="submit">📂 My Events</button></form>
   <%}%>
-  <form action="/ATTENDERhomepage/account" method="get"><button type="submit" class="nav-btn">👤 My Account</button></form>
+  <form action="/ATTENDERhomepage/<%= user._id%>/account" method="get"><button type="submit" class="nav-btn">👤 My Account</button></form>
   <form action="/ATTE/logout" method="get">
     <button class="nav-btn" type="submit">🚪 Logout</button>
   </form>
@@ -144,7 +144,8 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
     <% events.forEach(ev => { %>
       <div class="card">
         <h3><%= ev.title %></h3>
-        <p>Date: <%= ev.date %></p>
+        <p>Date: <%= new Date(ev.startDateTime).toLocaleString() %></p>
+        <p>location: <%= ev.location%></p>
        
       </div>
     <% }) %>

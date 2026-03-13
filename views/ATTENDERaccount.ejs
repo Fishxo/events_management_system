@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<style>
+/* Reset & Body */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+/* Container */
+.account-container {
+  background: #f5f7fb;
+  color: #333;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.account-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 25px;
+  color: #fff;
+  text-align: center;
+}
+.account-header h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+.account-header p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* Main Info Sections */
+.account-content {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.account-section {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+.account-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.account-section h3 {
+  margin-bottom: 15px;
+  color: #667eea;
+}
+
+.account-section p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.account-section button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #667eea;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.account-section button:hover {
+  background: #764ba2;
+  transform: translateY(-2px);
+}
+
+/* Full width section */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: #ccc;
+  margin: 15px 0;
+  opacity: 0.3;
+}
+
+</style>
+</head>
+<body>
+
+<div class="account-container">
+  <!-- Header -->
+  <div class="account-header">
+    <h2>My Account</h2>
+    <p>Manage your personal information and view your activity</p>
+  </div>
+
+  <!-- Account Content -->
+  <div class="account-content">
+    <!-- Personal Info -->
+    <div class="account-section">
+      <h3>Personal Information</h3>
+      <p><strong>Name:</strong> <%= user.attendname %></p>
+      <p><strong>Email:</strong> <%= user.attendemail %></p>
+      <p><strong>Phone:</strong> <%= user.phone || "Not Provided" %></p>
+      <p><strong>Role:</strong> <%= user.role %></p>
+      <button onclick="location.href='/ATTENDERhomepage/account/update'">Update Info</button>
+    </div>
+
+    <!-- Activity / History -->
+    <div class="account-section">
+      <h3>Activity / History</h3>
+      <p><strong>Registered Events:</strong> ></p>
+      <p><strong>Created Events:</strong></p>
+      <p><strong>Last Login:</strong> </p>
+      <button onclick="location.href='/ATTENDERhomepage/account/history'">View History</button>
+    </div>
+
+    <!-- Security -->
+    <div class="account-section">
+      <h3>Security</h3>
+      <p>Change your password or enable two-factor authentication.</p>
+      <button onclick="location.href='/ATTENDERhomepage/account/security'">Update Security</button>
+    </div>
+
+    <!-- Preferences / Settings -->
+    <div class="account-section">
+      <h3>Preferences</h3>
+      <p>Manage notifications, email preferences, and other settings.</p>
+      <button onclick="location.href='/ATTENDERhomepage/account/preferences'">Update Settings</button>
+    </div>
+
+    <!-- Full width optional section -->
+    <div class="account-section full-width">
+      <h3>Support / Help</h3>
+      <p>Need assistance? Contact our support team or read FAQs.</p>
+      <button onclick="location.href='/ATTENDERhomepage/account/support'">Get Help</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
