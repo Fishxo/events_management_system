@@ -8,7 +8,7 @@ exports.home = async(req,res) =>{
       try{
         // Save user info in session
        const attenderId = req.session.attenderId;
-       if(!attenderId){return res.redirect('/login')}
+       if(!attenderId){return res.redirect('/ATTE/login')}
        const user = await Attender.findById(attenderId)
 
         // optional, for greetings
@@ -116,6 +116,7 @@ exports.MYevents = async(req,res) =>{
                 res.send('could not fetch your events')
             }
 }
+//getting events for organizer that created by organizer
 exports.MINEevents = async(req,res) =>{
    const organizerId = req.session.attenderId;
    try{
@@ -127,6 +128,7 @@ exports.MINEevents = async(req,res) =>{
     res.send('could not get this page')
    }
 }
+
 //getting delet requiest to registered events from the attender
 exports.deleteMYevents = async(req,res) =>{
         const attenderId = req.session.attenderId;
@@ -143,18 +145,7 @@ exports.deleteMYevents = async(req,res) =>{
          }
 }
 
-//gettingt or organizer the events that created by organizer
-exports.MINEevents = async(req,res) =>{
-   const organizerId = req.session.attenderId;
-   try{
-    const eve = await event.find({organId:organizerId})
-   console.log(organizerId)
-    res.render('MINEeventsFOROrgan',{eve})
-   }catch(err){
-    console.log(err)
-    res.send('could not get this page')
-   }
-}
+
 
 //getting attender account info page
 exports.account = async(req,res) =>{

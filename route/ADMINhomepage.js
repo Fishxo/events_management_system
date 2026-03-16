@@ -45,5 +45,13 @@ router.get('/logout',admin.logout)
 // Approve or deny a request
 router.post("/:userId/requests", admin.handleOrganizerRequest);
 
+//getting the list of organizer and management of them them page 
+router.get('/organMGT',admin.organMgt)
+
+//viewing the delait information about organizer from organizer management page 
+router.get('/:userId/view',admin.ORGANview)
+
+//getting thr requiest to remove the organizer from the organizer
+router.post('/:userId/remove',admin.removeORGI)
 
 module.exports = router;

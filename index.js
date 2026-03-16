@@ -13,7 +13,7 @@ app.set('view engine','ejs')
 app.use(session({
   secret: 'yourSecretKey',  // anything random, used to sign session ID
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
 
 }));

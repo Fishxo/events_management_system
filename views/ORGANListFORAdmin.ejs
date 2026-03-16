@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Organizers</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 40px 20px;
+}
+header h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+header p {
+  font-size: 16px;
+  color: #e0e0ff;
+}
+
+/* Container */
+.organizers-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+/* Organizer Card */
+.organizer-card {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.organizer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.organizer-card h3 {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.organizer-card p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* Action Buttons */
+.organizer-card .actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.organizer-card .actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.organizer-card .view-btn {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.organizer-card .view-btn:hover {
+  background: #1e40af;
+}
+
+.organizer-card .remove-btn {
+  background: #ef4444;
+  color: #fff;
+}
+
+.organizer-card .remove-btn:hover {
+  background: #b91c1c;
+}
+
+.no-organizers {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 50px;
+  color: #ffe;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>All Organizers</h2>
+  <p>Manage and view all registered organizers</p>
+</header>
+
+<div class="organizers-container">
+  <% if (!orgis || orgis.length === 0) { %>
+    <p class="no-organizers">No organizers found.</p>
+  <% } else { %>
+    <% orgis.forEach(org => { %>
+      <div class="organizer-card">
+        <h3><%= org.attendname %></h3>
+        <p><strong>Email:</strong> <%= org.attendemail %></p>
+        <p><strong>Role:</strong> <%= org.role %></p>
+        <div class="actions">
+          <form action="/ADMINhomepage/<%= org._id %>/view" method="get">
+            <button type="submit" class="view-btn">View</button>
+          </form>
+          <form action="/ADMINhomepage/<%= org._id %>/remove" method="post" onsubmit="return confirm('Are you sure you want to remove this organizer?')">
+            <button type="submit" class="remove-btn">Remove</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+</body>
+</html>

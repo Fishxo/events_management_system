@@ -187,7 +187,7 @@ body{
         <p class="event-info"><strong>Category:</strong> <%= ev.category %></p>
         <p class="event-info"><strong>Price:</strong> $<%= ev.price %></p>
         <p class="event-info"><strong>Capacity:</strong> <%= ev.capacity %></p>
-
+        <p class="event-info"><strong>organizer:</strong><%= attenderId%></p>
         <div class="buttons">
           <form action="/ADMINhomepage/<%= ev._id %>/edit" method="get">
             <button class="update">Update</button>

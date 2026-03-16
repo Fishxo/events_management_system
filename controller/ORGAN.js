@@ -11,6 +11,36 @@ exports.createdevents = async(req,res) =>{
   const {title,description,startDateTime,endDateTime,location,category,price,capacity,} = req.body;
   const organizerId = req.session.attenderId;
    try{
+      //making validation before creating it for organizer
+
+      //convert the event starting date and end date into date object 
+      const start = new Date(startDateTime);
+      const end  = new Date(endDateTime)
+
+      //event starting date should not be in the past 
+      if (start < new Date()){
+         return res.send('the event starting date can not be the past')
+      }
+      //the event end date can not be befor the starting date 
+      if(end < start){
+         return res.send('the event end date should be after starting date')
+      }
+      //the event should last at least 30 minute long
+      if(end - start/1000/60 < 30){
+         return res.send('the event should last at least 30 minute')
+      }
+      //stoping the event overlapping when they get created 
+      const overlapping = await event.findOne({
+         location,
+         startDateTime :{ $lt:end},
+         endDateTime : {$gt:start}
+      })
+      //send message to stop overlapping
+      if(overlapping){
+         return res.send('sorry there is another event the same exact place and time')
+
+      }
+
       const eves = new event({
          title,
          description,
@@ -46,7 +76,7 @@ exports.delete = async(req,res) => {
 
         const eve = await event.find({organId : organizerId})
        
-        res.render('MINEeventsFOROrgan',{eve})
+        res.render('MINEeventsFOROrgan',{eve,organizerId})
      }catch(err){
         console.log(err)
         res.send('sorry could not delete it')

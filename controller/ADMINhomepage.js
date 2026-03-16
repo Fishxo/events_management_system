@@ -2,6 +2,7 @@ const event = require('../models/event');
 const admin = require('../models/ADMINlogin');
 const router = require('../route/ADMINhomepage');
 const attender = require('../models/ATTENDER');
+const registered = require('../models/REGISRTRATIONevents')
 
 //getting a form for creating a new event
 exports.createEVENT = (req,res) =>{
@@ -134,8 +135,10 @@ exports.DELETEevent = async(req,res) =>{
         const ad = await admin.find();
         //deleting the selected event
         await event.findByIdAndDelete(eveId)
-       const allev = await event.find()
-        res.render('ADMINviewallevents',{allev,ad})
+        await registered.deleteMany({eventId:eveId})
+        
+       const even = await event.find()
+        res.render('MANAGEevent',{even})
      }catch(err){
         console.log(err)
         return res.send('sorry could not deleted')
@@ -255,8 +258,49 @@ exports.handleOrganizerRequest = async (req, res) => {
   }
 };
 
+//getting the list of organizer and managing them page
+exports.organMgt = async(req,res) =>{
+  try{
+    const orgis = await attender.find({role:'organizer'})
+    res.render('ORGANlistFORAdmin',{orgis})
+  }catch(err){
+    console.log(err)
+    res.send('could not get the page')
+  }
+}
 
+//view the organizer all information in managing the organizer page 
+exports.ORGANview = async(req,res) =>{
+  const {userId} = req.params;
+        try{
+          const orgis = await attender.findById(userId)
+          const eves = await event.find({organId:userId})
+           res.render('ORGANAllINFO',{orgis,eves})
+        }catch(err){
+          console.log(err)
+          res.send('sorry could not get it')
+        }
+}
 
+//getting the requist to remove the organizer from bieng organizer
+exports.removeORGI = async(req,res) =>{
+   const {userId} = req.params;
+    try{
+      const user = await attender.findById(userId)
+      if(user.role == 'attendee'){
+        return res.send('already reduced to attender')
+      }
+      await event.deleteMany({organId:userId})
+      console.log(user)
+      user.role = 'attendee'
+      await user.save()
+      return res.send('the user downgraded successully')
+      
+    }catch(err){
+      console.log(err)
+      return res.send('sorry coould not remove the organizer')
+    }
+}
 //getting the admin logout requiest and redirect to admin login page 
 exports.logout = (req,res) => {
   res.render('ADMINlogin')

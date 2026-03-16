@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizer Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 40px 20px;
+}
+header h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+header p {
+  font-size: 16px;
+  color: #e0e0ff;
+}
+
+/* Organizer Info */
+.organizer-info {
+  background: #fff;
+  color: #333;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.organizer-info h3 {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.organizer-info p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Action Buttons */
+.organizer-info .actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.organizer-info button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.organizer-info .message-btn {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.organizer-info .message-btn:hover {
+  background: #1e40af;
+}
+
+.organizer-info .remove-btn {
+  background: #ef4444;
+  color: #fff;
+}
+
+.organizer-info .remove-btn:hover {
+  background: #b91c1c;
+}
+
+/* Events created by organizer */
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 0 20px 40px 20px;
+}
+
+.event-card {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.event-card h4 {
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.event-card p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Empty state */
+.no-events {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 50px;
+  color: #ffe;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>Organizer Details</h2>
+  <p>Information and events created by this organizer</p>
+</header>
+
+<!-- Organizer Info -->
+<div class="organizer-info">
+  <h3><%= orgis.attendname %></h3>
+  <p><strong>Email:</strong> <%= orgis.attendemail %></p>
+  <p><strong>Role:</strong> <%= orgis.role %></p>
+  <div class="actions">
+    <button class="message-btn">Send Message</button>
+    <form action="/ADMINhomepage/<%= orgis._id %>/remove" method="post" onsubmit="return confirm('Are you sure you want to remove this organizer?')">
+      <button type="submit" class="remove-btn">Remove Organizer</button>
+    </form>
+  </div>
+</div>
+
+<!-- Events Created -->
+<div class="events-container">
+  <% if (!eves || eves.length === 0) { %>
+    <p class="no-events">This organizer has not created any events yet.</p>
+  <% } else  { %>
+    <h2>events created by <%= orgis.attendname%></h2>
+    <% eves.forEach(ev => { %>
+      <div class="event-card">
+        <h4><%= ev.title %></h4>
+        <p><strong>Date:</strong> <%= new Date(ev.startDateTime).toLocaleString() %></p>
+        <p><strong>Location:</strong> <%= ev.location %></p>
+        <p><strong>Category:</strong> <%= ev.category %></p>
+        <p><strong>Price:</strong> $<%= ev.price %></p>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+</body>
+</html>

@@ -120,7 +120,7 @@ hr{
         <p><strong>Date:</strong> <%= new Date(e.startDateTime).toLocaleString() %></p>
         <p><strong>Location:</strong> <%= e.location %></p>
         <p><strong>Category:</strong> <%= e.category %></p>
-        <p><strong>organizer id</strong> <%= organizerId%></p>
+        <p><strong>organizer id</strong> <%= attenderId%></p>
                                              
         <form action="/ADMINhomepage/<%= e._id %>/edit" method="get" style="display:inline;">
           <button type="submit">Edit</button>

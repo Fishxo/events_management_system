@@ -111,7 +111,7 @@ body { display:flex; min-height:100vh; background:linear-gradient(135deg,#667eea
 <!-- Main Content -->
 <div class="main">
   <div class="header">
-    <h1>Welcome Back, <%= user.attendname %> 👋</h1>
+    <h1>Welcome Back, <%= user.attendname %> 👋 <%= attenderId%></h1>
     <% if(user.role == "organizer") {%>
        <p>you are organizer now you can create events</p>
     <%}%>
