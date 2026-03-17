@@ -22,7 +22,12 @@ const attenderSchema = new mongoose.Schema({
         type:String,
         enum:["none","pending","rejected","approved"],
         default:"none"
-    }
+    },
+    attendbio:{
+        type:String,
+    },
+    TwoStepCode:String,
+    codeExpiry:Date,
 });
 
 // creating the model

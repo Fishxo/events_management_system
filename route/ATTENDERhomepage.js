@@ -26,4 +26,19 @@ router.post('/:eventId/deleteMYevent', attend.deleteMYevents)
 //getting the account page from the attender side 
 router.get('/:userId/account',attend.account)
 
+//getting the attener account updated page 
+router.get('/:userId/ACCOUNTupdate',attend.accountupdate)
+
+//getting the updated informations for attender account 
+router.post('/:userId/ACCOUNTupdated',attend.accupdated)
+
+//getting the attender history in account section
+router.get('/:userId/ACCOUNThistory',attend.accounthistory)
+
+//getting the requiest to get security update page 
+router.get('/:userId/ACCOUNTsecurity',attend.ACCOUNTsecurity)
+
+//getting the updated password from account page 
+router.post('/:userId/UPDATEDpassword',attend.UPDATEDpassword)
+
 module.exports = router;

@@ -158,3 +158,87 @@ exports.account = async(req,res) =>{
         res.send('something is wrong')
      }
 }
+
+//getting page for updating the attender information
+exports.accountupdate = async(req,res) =>{
+    const {userId} = req.params;
+     try{
+        const user = await Attender.findById(userId)
+        res.render('ATTENDERaccountupdate',{user})
+     }catch(err){
+        console.log(err)
+        res.send('could not find it')
+     }
+}
+
+//reciving the updated infos and saving to the database
+exports.accupdated = async(req,res) =>{
+    const {userId} = req.params;
+    const {attendname,attendusername,attendemail,attendbio} = req.body;
+
+      try{
+        const accup = await Attender.findById(userId)
+         if(!accup){
+            return res.send('the user is not found')
+         }
+        accup.attendname = attendname;
+        accup.attendusername = attendusername;
+        accup.attendemail = attendemail;
+        accup.attendbio = attendbio;
+
+        await accup.save();
+        return res.send('account updated successfully')
+      }catch(err){
+        console.log(err)
+        return res.send('somthing is wrong')
+      }
+
+}
+
+//getting the attender activity history in account section
+exports.accounthistory = async(req,res) =>{
+    const {userId} = req.params;
+            try{
+                const use = await Attender.findById(userId)
+                const eves = await registered.find({attenderId:userId}).populate('eventId')
+                const own = await  event.find({organId:userId})
+
+                res.render('ATTENDERactivityhistory',{use,eves,own})
+            }catch(err){
+                console.log(err)
+                return res.send('could not open this page ')
+            }
+
+}
+
+//gettint the requiest to to get the security update
+exports.ACCOUNTsecurity = async(req,res) =>{
+    const {userId} = req.params;
+            try{
+                const user = await Attender.findById(userId)
+                const message = req.session.securityMessage || '';
+                req.session.securityMessage = null;
+                res.render('ATTENDERacountsecurity',{user, message})
+            }catch(err){
+                console.log(err)
+                res.send('could not open this page')
+            }
+}
+
+//getting the updated password infos and save to database
+exports.UPDATEDpassword = async(req,res) =>{
+    const {userId} = req.params;
+    const {attendpassword} = req.body;
+
+     try{
+            const core = await Attender.findById(userId)
+
+            core.attendpassword = attendpassword;
+
+            await core.save()
+            return res.send('you have changed the password well')
+     }catch(err){
+        console.log(err)
+        return res.send(('could not make it '))
+     }
+}

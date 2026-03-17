@@ -130,7 +130,7 @@ body {
       <p><strong>Email:</strong> <%= user.attendemail %></p>
       <p><strong>Phone:</strong> <%= user.phone || "Not Provided" %></p>
       <p><strong>Role:</strong> <%= user.role %></p>
-      <button onclick="location.href='/ATTENDERhomepage/account/update'">Update Info</button>
+     <form action="/ATTENDERhomepage/<%= user._id%>/ACCOUNTupdate" method="get"><button type="submit">update</button></form>
     </div>
 
     <!-- Activity / History -->
@@ -139,14 +139,14 @@ body {
       <p><strong>Registered Events:</strong> ></p>
       <p><strong>Created Events:</strong></p>
       <p><strong>Last Login:</strong> </p>
-      <button onclick="location.href='/ATTENDERhomepage/account/history'">View History</button>
+      <form action="/ATTENDERhomepage/<%= user._id%>/ACCOUNThistory" method="get"><button type="submit">account history</button></form>
     </div>
 
     <!-- Security -->
     <div class="account-section">
       <h3>Security</h3>
       <p>Change your password or enable two-factor authentication.</p>
-      <button onclick="location.href='/ATTENDERhomepage/account/security'">Update Security</button>
+      <form action="/ATTENDERhomepage/<%= user._id%>/ACCOUNTsecurity" method="get"><button type="submit">update Security</button></form>
     </div>
 
     <!-- Preferences / Settings -->
