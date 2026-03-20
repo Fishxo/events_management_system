@@ -6,163 +6,304 @@
 <title>Organizer Details</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   min-height: 100vh;
 }
 
-/* Header */
-header {
-  text-align: center;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 40px 20px;
 }
-header h2 {
-  font-size: 32px;
-  margin-bottom: 10px;
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
 }
+
+header h1 {
+  font-size: 36px;
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
 header p {
   font-size: 16px;
-  color: #e0e0ff;
+  opacity: 0.9;
 }
 
-/* Organizer Info */
-.organizer-info {
-  background: #fff;
-  color: #333;
-  max-width: 600px;
-  margin: 0 auto 40px auto;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+.organizer-card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  max-width: 700px;
+  margin: 0 auto 50px auto;
+  padding: 30px;
+  border-radius: 24px;
   text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
 
-.organizer-info h3 {
-  color: #667eea;
-  margin-bottom: 10px;
+.organizer-card .avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 3px solid rgba(255,255,255,0.3);
 }
 
-.organizer-info p {
-  font-size: 14px;
-  margin-bottom: 6px;
+.organizer-card h2 {
+  margin: 0 0 5px 0;
+  font-size: 28px;
 }
 
-/* Action Buttons */
-.organizer-info .actions {
-  margin-top: 15px;
+.organizer-card .role-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.organizer-card .info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 25px 0;
+  text-align: left;
+}
+
+.organizer-card .info-item {
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.organizer-card .info-item label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.organizer-card .info-item span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.organizer-card .actions {
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   gap: 15px;
+  flex-wrap: wrap;
 }
 
-.organizer-info button {
-  padding: 10px 20px;
+.organizer-card button,
+.organizer-card .btn {
+  padding: 12px 28px;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.3s;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.organizer-info .message-btn {
-  background: #3b82f6;
-  color: #fff;
+.btn-message {
+  background: #fff;
+  color: #667eea;
 }
 
-.organizer-info .message-btn:hover {
-  background: #1e40af;
+.btn-message:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
 }
 
-.organizer-info .remove-btn {
+.btn-remove {
   background: #ef4444;
   color: #fff;
 }
 
-.organizer-info .remove-btn:hover {
-  background: #b91c1c;
+.btn-remove:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
 }
 
-/* Events created by organizer */
-.events-container {
+.events-section {
+  margin-top: 50px;
+}
+
+.events-section h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 25px;
-  padding: 0 20px 40px 20px;
 }
 
 .event-card {
-  background: #fff;
+  background: rgba(255,255,255,0.95);
   color: #333;
-  padding: 20px;
+  padding: 25px;
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
 .event-card h4 {
   color: #667eea;
-  margin-bottom: 8px;
+  margin: 15px 0 12px 0;
+  font-size: 20px;
 }
 
 .event-card p {
   font-size: 14px;
-  margin-bottom: 6px;
+  margin: 8px 0;
+  color: #555;
 }
 
-/* Empty state */
+.event-card .price-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
 .no-events {
   text-align: center;
+  padding: 60px 20px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  margin-top: 30px;
+}
+
+.no-events p {
   font-size: 18px;
-  margin-top: 50px;
-  color: #ffe;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 28px;
+  }
+  
+  .organizer-card {
+    padding: 20px;
+    margin: 0 10px 30px;
+  }
+  
+  .organizer-card h2 {
+    font-size: 22px;
+  }
+  
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 <body>
 
-<header>
-  <h2>Organizer Details</h2>
-  <p>Information and events created by this organizer</p>
-</header>
+<div class="container">
+  <header>
+    <h1>Organizer Details</h1>
+    <p>Information and events created by this organizer</p>
+  </header>
 
-<!-- Organizer Info -->
-<div class="organizer-info">
-  <h3><%= orgis.attendname %></h3>
-  <p><strong>Email:</strong> <%= orgis.attendemail %></p>
-  <p><strong>Role:</strong> <%= orgis.role %></p>
-  <div class="actions">
-    <button class="message-btn">Send Message</button>
-    <form action="/ADMINhomepage/<%= orgis._id %>/remove" method="post" onsubmit="return confirm('Are you sure you want to remove this organizer?')">
-      <button type="submit" class="remove-btn">Remove Organizer</button>
-    </form>
-  </div>
-</div>
-
-<!-- Events Created -->
-<div class="events-container">
-  <% if (!eves || eves.length === 0) { %>
-    <p class="no-events">This organizer has not created any events yet.</p>
-  <% } else  { %>
-    <h2>events created by <%= orgis.attendname%></h2>
-    <% eves.forEach(ev => { %>
-      <div class="event-card">
-        <h4><%= ev.title %></h4>
-        <p><strong>Date:</strong> <%= new Date(ev.startDateTime).toLocaleString() %></p>
-        <p><strong>Location:</strong> <%= ev.location %></p>
-        <p><strong>Category:</strong> <%= ev.category %></p>
-        <p><strong>Price:</strong> $<%= ev.price %></p>
+  <div class="organizer-card">
+    <div class="avatar"><%= orgis.attendname.charAt(0) %></div>
+    <h2><%= orgis.attendname %></h2>
+    <span class="role-badge"><%= orgis.role %></span>
+    
+    <div class="info-grid">
+      <div class="info-item">
+        <label>organizer name</label>
+        <span><%= orgis.attendname %></span>
+        <label >organizer username </label>
+        <span><%= orgis.attendusername%></span>
+        <label>Email</label>
+        <span><%= orgis.attendemail %></span>
+        
       </div>
-    <% }) %>
-  <% } %>
+    </div>
+    
+    <div class="actions">
+      <button class="btn btn-message">Send Message</button>
+      <form action="/ADMINhomepage/<%= orgis._id %>/remove" method="post" onsubmit="return confirm('Are you sure you want to remove this organizer?')">
+        <button type="submit" class="btn btn-remove">Remove Organizer</button>
+      </form>
+    </div>
+  </div>
+
+  <section class="events-section">
+    <% if (eves && eves.length > 0) { %>
+      <h2>Events Created by <%= orgis.attendname %></h2>
+      <div class="events-grid">
+        <% eves.forEach(ev => { %>
+          <div class="event-card">
+            <h4><%= ev.title %></h4>
+            <p><strong>Date:</strong> <%= new Date(ev.startDateTime).toLocaleString() %></p>
+            <p><strong>Location:</strong> <%= ev.location %></p>
+            <p><strong>Category:</strong> <%= ev.category %></p>
+            <span class="price-tag">$<%= ev.price %></span>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="no-events">
+        <p>This organizer has not created any events yet.</p>
+      </div>
+    <% } %>
+  </section>
 </div>
 
 </body>
