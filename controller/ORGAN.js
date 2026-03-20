@@ -26,7 +26,7 @@ exports.createdevents = async(req,res) =>{
          return res.send('the event end date should be after starting date')
       }
       //the event should last at least 30 minute long
-      if(end - start/1000/60 < 30){
+      if((end - start)/1000/60 < 30){
          return res.send('the event should last at least 30 minute')
       }
       //stoping the event overlapping when they get created 
