@@ -290,8 +290,17 @@ exports.removeORGI = async(req,res) =>{
       if(user.role == 'attendee'){
         return res.send('already reduced to attender')
       }
+      
+      
+      //gettint the events created by this organizer to remove from the list 
+      const eventsBYorgi = await event.find({organId:userId})
+      const eventIds = eventsBYorgi.map(e=>e._id)
+
+      //deleting the events
+      await registered.deleteMany({eventId:{$in : eventIds}})
+
       await event.deleteMany({organId:userId})
-      console.log(user)
+
       user.role = 'attendee'
       await user.save()
       return res.send('the user downgraded successully')

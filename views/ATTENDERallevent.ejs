@@ -117,7 +117,12 @@ body {
         <p><strong>Capacity:</strong> <%= all.capacity %></p>
       </div>
       <!-- Pass user ID here -->
-      <button type="submit">Join Event</button>
+      
+            <% if(!all.isExpired){ %>
+        <button type="submit">Join</button>
+      <% } else { %>
+        <button disabled ret>Event Ended</button>
+      <% } %>
     </div>
   </form>
 <% }) %>

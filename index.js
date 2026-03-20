@@ -27,6 +27,28 @@ app.use((req, res, next) => {
 //getting the route folder 
 app.use('/',require('./route/first'))
 
+//marking the expired events as expired 
+const cron = require('node-cron');
+const Event = require('./models/event');
+
+cron.schedule('0 0 * * *', async () => {
+  await Event.updateMany(
+    { endDateTime: { $lt: new Date() } },
+    { $set: { isExpired: true } }
+  );
+});
+
+// Run once immediately (for testing or updating now)
+async function markExpired() {
+  await Event.updateMany(
+    { endDateTime: { $lt: new Date() } },
+    { $set: { isExpired: true } }
+  );
+  console.log('Expired events updated immediately');
+}
+
+markExpired(); // run now
+
 //connecting to the database
 mongoose.connect('mongodb://localhost:27017/event_mgts_system')
 .then(()=>console.log('connected to database'))

@@ -64,7 +64,7 @@ attendees: [{
   type: mongoose.Schema.Types.ObjectId,
   ref: 'Attender'
 }],
-
+isExpired: { type: Boolean, default: false }
 },
 
 

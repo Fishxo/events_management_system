@@ -20,18 +20,22 @@ exports.home = async(req,res) =>{
                 const upcomin = await event.find({
                     startDateTime: {$gt:now,$lt:weeklater} })
 
-                    const upcome = await event.countDocuments({
-                        startDateTime :{$gt:now,$lt:weeklater}
-                    })
+                const upcome = await event.countDocuments({
+                    startDateTime :{$gt:now,$lt:weeklater}
+                })
                 const even = await event.countDocuments()
-                
-                // Fetch events
-                const events = await event.find();
 
-                //showing the amount of the attenders have joined 
-                const join = await registered.countDocuments({attenderId});
+                // show organizer's own events (for the organizer dashboard block)
+                let events = []
+                if(user.role === 'organizer'){
+                    events = await event.find({organId: attenderId})
+                }
 
-                 res.render('ATTENDERhome',{user,events,upcome,upcomin,even,join})
+                // showing the amount of the attenders have joined
+                const join = await registered.countDocuments({attenderId})
+                console.log('joined events count:', join)
+
+                res.render('ATTENDERhome',{user,attenderId,events,upcome,upcomin,even,join})
       }catch(err){
         console.log(err)
         res.send('could not get the homepage')
@@ -45,7 +49,9 @@ exports.FETCHevents = async(req,res) =>{
      try {
         
         const allev = await event.find();
-        res.render('ATTENDERallevent',{allev})
+        //getting the expired events from the database
+        const eves = await event.find({isExpired:true})
+        res.render('ATTENDERallevent',{allev,eves})
      }catch(err){
         console.log(err)
         res.send('could not get the events')
@@ -91,8 +97,7 @@ exports.registering = async(req,res) =>{
          //creating registration for event if they are not registered already
          const register = new registered({eventId,attenderId})
          await register.save()
-         console.log(attenderId)
-         console.log(eventId)
+        
 
          return res.send('you joined the event')
 
@@ -107,6 +112,7 @@ exports.registering = async(req,res) =>{
 exports.MYevents = async(req,res) =>{
     const userId = req.session.attenderId;
             try{
+            
                     const regi = await registered.find({attenderId:req.session.attenderId})
                     .populate('eventId')
                     .populate('attenderId')
